@@ -1,0 +1,40 @@
+APPLICATION_ID: jaxrstest
+service_description:
+  name: jaxrsserver
+  version: 1.0.0
+  description: SDK版本2.2.5
+instance_description:
+  properties:
+    tags: test2
+cse:
+  service:
+    registry:
+      address: https://cse.cn-north-1.myhwclouds.com:443
+      instance:
+        watch: false
+      api:
+        version: v3
+  config:
+    client:
+      serverUri: https://cse.cn-north-1.myhwclouds.com:443
+      refreshPort: 30104
+      refreshMode: 1
+      refresh_interval: 5000
+      api:
+        version: v2
+  monitor:
+    client:
+      serverUri: https://cse.cn-north-1.myhwclouds.com:443
+      api:
+        version: v1
+  rest:
+    address: 0.0.0.0:31502
+  handler:
+    chain:
+      Provider:
+        default: tcc-server,bizkeeper-provider,perf-stats,tracing-provider,sla-provider,qps-flowcontrol-provider
+#       default: bizkeeper-provider,perf-stats,tracing-provider,sla-provider
+  credentials:
+    accessKey: UZLI6CLENEO6D2ANV35U
+    secretKey: nAQ7jQyynhuDckGGtzNYMJGDZoFqaEfNwhadIXXP
+    akskCustomCipher: default
