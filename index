@@ -1,1 +1,15 @@
-fewfew
+{
+  "owner": "hwcse",
+  "name": "slow",
+  "username": "servicestage-customer-yfy02",
+  "accessToken": "7930db39dd99e8428e3971cf9e661df9b23cc023",
+  "sdkVersion": "3.0",
+  "language": "CSE-Java (SpringMVC)",
+  "groupId": "com.service",
+  "artifactId": "test123",
+  "packageName": "com.service.test123",
+  "version": "1.0.0",
+  "restPath": "/test12345",
+  "specs": "",
+  "level": "generateAll"
+}
