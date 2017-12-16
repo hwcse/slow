@@ -1,15 +1,21 @@
-{
-  "owner": "hwcse",
-  "name": "slow",
-  "username": "servicestage-customer-yfy02",
-  "accessToken": "7930db39dd99e8428e3971cf9e661df9b23cc023",
-  "sdkVersion": "3.0",
-  "language": "CSE-Java (SpringMVC)",
-  "groupId": "com.service",
-  "artifactId": "test123",
-  "packageName": "com.service.test123",
-  "version": "1.0.0",
-  "restPath": "/test12345",
-  "specs": "",
-  "level": "generateAll"
-}
+private void exactProcessInfo(MonitorData monitorData) {
+        MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
+        MemoryUsage memoryHeapUsage = memBean.getHeapMemoryUsage();
+        MemoryUsage memoryNonHeapUsage = memBean.getNonHeapMemoryUsage();
+        ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
+        int threadCount = threadBean.getThreadCount();
+        OperatingSystemMXBean osMxBean = ManagementFactory.getOperatingSystemMXBean();
+        // this method only work well on Unix operation system
+        double cpu = osMxBean.getSystemLoadAverage();
+        monitorData.setCpu(cpu);
+        monitorData.setThreadCount(threadCount);
+        Map<String, Long> memoryInfo = new HashMap<>();
+        memoryInfo.put("heapInit", memoryHeapUsage.getInit());
+        memoryInfo.put("heapMax", memoryHeapUsage.getMax());
+        memoryInfo.put("heapCommit", memoryHeapUsage.getCommitted());
+        memoryInfo.put("heapUsed", memoryHeapUsage.getUsed());
+        memoryInfo.put("nonHeapInit", memoryNonHeapUsage.getInit());
+        memoryInfo.put("nonHeapCommit", memoryNonHeapUsage.getCommitted());
+        memoryInfo.put("nonHeapUsed", memoryNonHeapUsage.getUsed());
+        monitorData.setMemory(memoryInfo);
+    }
