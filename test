@@ -35,6 +35,7 @@ cse:
         default: tcc-server,bizkeeper-provider,perf-stats,tracing-provider,sla-provider,qps-flowcontrol-provider
 #       default: bizkeeper-provider,perf-stats,tracing-provider,sla-provider
   credentials:
-    accessKey: UZLI6CLENEO6D2ANV35U
-    secretKey: nAQ7jQyynhuDckGGtzNYMJGDZoFqaEfNwhadIXXP
+    accessKey: EDV0PE1TVESJ0Z9SFMV0
+    secretKey: 82ldOxAc8keg3pbW7pXQbgSRLR5VO4RRBhxhbLKN
+    project: cn-north-1
     akskCustomCipher: default
