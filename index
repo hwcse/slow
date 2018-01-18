@@ -1,21 +1,11 @@
-private void exactProcessInfo(MonitorData monitorData) {
-        MemoryMXBean memBean = ManagementFactory.getMemoryMXBean();
-        MemoryUsage memoryHeapUsage = memBean.getHeapMemoryUsage();
-        MemoryUsage memoryNonHeapUsage = memBean.getNonHeapMemoryUsage();
-        ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
-        int threadCount = threadBean.getThreadCount();
-        OperatingSystemMXBean osMxBean = ManagementFactory.getOperatingSystemMXBean();
-        // this method only work well on Unix operation system
-        double cpu = osMxBean.getSystemLoadAverage();
-        monitorData.setCpu(cpu);
-        monitorData.setThreadCount(threadCount);
-        Map<String, Long> memoryInfo = new HashMap<>();
-        memoryInfo.put("heapInit", memoryHeapUsage.getInit());
-        memoryInfo.put("heapMax", memoryHeapUsage.getMax());
-        memoryInfo.put("heapCommit", memoryHeapUsage.getCommitted());
-        memoryInfo.put("heapUsed", memoryHeapUsage.getUsed());
-        memoryInfo.put("nonHeapInit", memoryNonHeapUsage.getInit());
-        memoryInfo.put("nonHeapCommit", memoryNonHeapUsage.getCommitted());
-        memoryInfo.put("nonHeapUsed", memoryNonHeapUsage.getUsed());
-        monitorData.setMemory(memoryInfo);
-    }
+        InetAddress add = InetAddress.getByName("www.baidu.com");
+        System.out.println(add.getHostAddress());
+        System.out.println(add.getCanonicalHostName());
+        System.out.println(add.getHostName());
+        
+        InetAddress[] addresses = InetAddress.getAllByName("115.239.211.112");
+        for (InetAddress address : addresses) {
+            System.out.println(address.getHostAddress());
+            System.out.println(address.getCanonicalHostName());
+            System.out.println(address.getHostName());
+        }
