@@ -40,3 +40,4 @@ cse:
     project: cn-north-1
     akskCustomCipher: default
 QQQGY0YV12PMPNCDQITC	U3IgMadmGnOdJQwUTaINmUFsE7UscATYHkB4dFEG
+-Xdebug -Xrunjdwp:transport=dt_socket,address=13331,server=y,suspend=y
