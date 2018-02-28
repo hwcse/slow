@@ -1,11 +1,26 @@
-        InetAddress add = InetAddress.getByName("www.baidu.com");
-        System.out.println(add.getHostAddress());
-        System.out.println(add.getCanonicalHostName());
-        System.out.println(add.getHostName());
-        
-        InetAddress[] addresses = InetAddress.getAllByName("115.239.211.112");
-        for (InetAddress address : addresses) {
-            System.out.println(address.getHostAddress());
-            System.out.println(address.getCanonicalHostName());
-            System.out.println(address.getHostName());
-        }
+            if (HttpStatusClass.CLIENT_ERROR.equals(HttpStatusClass.valueOf(response.statusCode()))) {
+                String errorCode = bodyBuffer.toJsonObject().getString("errorCode");
+                if (cls.getName().equals(GetExistenceResponse.class.getName()) && "401002".equals(errorCode)) {
+                    GetExistenceResponse resp = new GetExistenceResponse();
+                    resp.setServiceId("SC_AUTH_FAILED_401002");
+                    holder.value = (T) resp;
+                    countDownLatch.countDown();
+                    return;
+                }
+            }
+            
+                if (microserviceInstance.getServiceId() == null) {
+        LOGGER.info("This instance lack of micro service id, maybe auth failed, please check it! This time we don't do this task.");
+        return false;
+    }
+    
+          if ("SC_AUTH_FAILED_401002".equals(serviceId)) {
+          LOGGER.info(
+                  "Server auth failed, no need to register. appId={}, name={}, version={}",
+                  serviceId,
+                  microservice.getServiceName(),
+                  microservice.getVersion());
+          this.taskStatus = TaskStatus.FINISHED;
+          this.registered = false;
+          return false;
+      }
