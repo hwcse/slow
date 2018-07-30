@@ -1,0 +1,82 @@
+package com.service.saasinpaas;
+
+import io.netty.bootstrap.Bootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpClient;
+import io.vertx.core.http.HttpClientRequest;
+import io.vertx.core.impl.VertxInternal;
+
+import java.net.InetSocketAddress;
+
+public class SaasinpaasApplication {
+    public static void main(String[] args) throws Exception {
+//        Log4jUtils.init();
+//        BeanUtils.init();
+
+
+        test();
+    }
+
+    public static void testVertx() {
+        Vertx vertx = Vertx.vertx();
+        HttpClient httpClient = vertx.createHttpClient();
+        HttpClientRequest req = httpClient.get(443, "cse.cn-north-1.myhuaweicloud.com", "/index.html", resp -> {
+            System.out.println(resp.statusCode());
+        });
+
+        req.end();
+    }
+
+    public static void test() {
+        //worker负责读写数据
+        Vertx vertx = Vertx.vertx();
+        EventLoopGroup worker = new NioEventLoopGroup();
+
+        try {
+            //辅助启动类
+            Bootstrap bootstrap = new Bootstrap();
+            VertxInternal vertxInternal = (VertxInternal)vertx;
+            bootstrap.resolver(vertxInternal.nettyAddressResolverGroup());
+            //设置线程池
+            bootstrap.group(worker);
+
+            //设置socket工厂
+            bootstrap.channel(NioSocketChannel.class);
+
+            //设置管道
+            bootstrap.handler(new ChannelInitializer<SocketChannel>() {
+                @Override
+                protected void initChannel(SocketChannel socketChannel) throws Exception {
+                    //获取管道
+                    ChannelPipeline pipeline = socketChannel.pipeline();
+                    //字符串解码器
+                    pipeline.addLast(new StringDecoder());
+                    //字符串编码器
+                    pipeline.addLast(new StringEncoder());
+                    //处理类
+                    pipeline.addLast(new ClientHandler4());
+                }
+            });
+
+            //发起异步连接操作
+            ChannelFuture future = bootstrap.connect("cse.cn-north-1.myhuaweicloud.com", 443).sync();
+
+            //等待客户端链路关闭
+            future.channel().closeFuture().sync();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            //优雅的退出，释放NIO线程组
+            worker.shutdownGracefully();
+        }
+    }
+}
