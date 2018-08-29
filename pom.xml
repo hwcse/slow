@@ -116,6 +116,37 @@
                     </archive>
                 </configuration>
             </plugin>
+                <plugin>
+				<groupId>io.swagger</groupId>
+				<artifactId>huawei-swagger-codegen-maven-plugin</artifactId>
+				<version>2.2.6</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<skipOverwrite>true</skipOverwrite>
+					<!-- generateAll or generateInterface -->
+					<generateLevel>generateAll</generateLevel>
+					<!-- specify the swagger yaml -->
+					<inputSpecs>
+						<param>./src/main/resources/service.yaml</param>
+					</inputSpecs>
+					<groupId>com.huawei.paas.cse.demo</groupId>
+					<artifactId>cse-test</artifactId>
+					<packageName>com.huawei.paas.cse.demo.cse-test</packageName>
+					<artifactVersion>1.0.0</artifactVersion>
+					<output>target/swagger</output>
+					<serviceName>demo</serviceName>
+					<cseVersion>2.3.35</cseVersion>
+					<!-- target to generate -->
+					<!--CSE-Java (JAX-RS) | CSE-Java (SpringMVC) | CSE-Java (POJO) -->
+					<language>CSE-java (SpringMVC)</language>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
 </project>
