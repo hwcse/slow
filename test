@@ -47,3 +47,4 @@ kube_master=$(add=$(ps -ef | grep kube | grep api-servers= | awk -F'--api-server
 ETCDCTL_API=3 etcdctl --cacert /var/paas/kubernetes/cert/ca.crt --cert /var/paas/kubernetes/cert/tls.crt --key /var/paas/kubernetes/cert/tls.key --endpoints 'https://cse-etcd-0.cse-etcd.cse.svc.cluster.local:30101,https://cse-etcd-1.cse-etcd.cse.svc.cluster.local:30101,https://cse-etcd-2.cse-etcd.cse.svc.cluster.local:30101' get --prefix /cse-sr/metrics/cloudbi
 export DASHBORD_SERVICE_HOST=`ifconfig $ethname | awk '/inet /{print $2}' | cut -d: -f2 | awk '{print $1}'`
 admin / BREUUAD7SX01WSQI3CWG@cpe
+cat Blender_cse_20181009*.log|grep "server filters response"|awk -F ":" '{print $2}'|awk '{a[$1]+=1;} END {for(i in a){print a[i]" "i;}}' | sort -t " " -k 2 -n >filters.txt
